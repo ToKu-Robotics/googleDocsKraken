@@ -58,6 +58,12 @@ function getCryptoCurr() {
       inEUR: 0
     }
   ]
+  var activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  var newSheet = activeSpreadsheet.getSheetByName("Kurse");
+  if (newSheet === null) {
+    yourNewSheet = activeSpreadsheet.insertSheet();
+    yourNewSheet.setName("Kurse");
+  }
   let index = 0;
   cryptos.forEach(currency => {
     index++
@@ -69,10 +75,13 @@ function getCryptoCurr() {
     inEur = inEur.a[0].split('.');
     inEur = `${inEur[0]},${inEur[1]}`
     currency.inEUR = inEur
-    var sheet = SpreadsheetApp.getActiveSheet();
-    sheet.getRange(index,1).setValue(currency.name);
-    sheet.getRange(index,2).setValue(currency.inEUR);
+    
+    var activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+    var newSheet = activeSpreadsheet.getSheetByName("Kurse");
+    newSheet.getRange(index,1).setValue(currency.name);
+    newSheet.getRange(index,2).setValue(currency.inEUR);
 
+    
   })
 }
 
